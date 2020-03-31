@@ -1,0 +1,28 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans&display=swap');
+
+.AppNavbar {
+    font-family: 'Alegreya Sans';
+    font-size: 30px;
+}
+
+.NavbarBrand {
+    font-size: 20px !important;
+    font-weight: 800;
+    color: #421B03 !important;
+}
+
+.logo {
+    width: 80px;
+    height: 80px;
+}
+
+.right_nav {
+    font-size: 20px;
+}
+
+.search_bar {
+    background-color: #6BD502 !important;
+    border-color: #6BD502 !important;
+    border-left-color: black !important;
+}
+
