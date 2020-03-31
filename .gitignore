@@ -8,6 +8,9 @@
 /.pnp
 .pnp.js
 
+**/.idea/workspace.xml 
+**/.idea/tasks.xml
+
 /.idea
 # testing
 /coverage
@@ -25,3 +28,4 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+.idea/workspace.xml
