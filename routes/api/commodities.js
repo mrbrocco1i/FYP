@@ -14,7 +14,6 @@ router.get('/', (req,res) => {
 // @route   POST api/commodities
 // @desc    Create A Post
 // @access  Public
-
 router.post('/', (req,res) => {
     const newCommodity = new Commodity({
         name: req.body.name,
