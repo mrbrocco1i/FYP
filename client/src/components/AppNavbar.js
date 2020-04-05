@@ -21,8 +21,50 @@ import {
     Input,
     Button
 } from 'reactstrap';
+import {
+    getFromStorage,
+    setInStorage,
+} from "./storage";
 
 class AppNavBar extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            isLoading: true,
+            token: '',
+            signUpError: '',
+            signInError: '',
+            masterError: ''
+        };
+    }
+
+    componentDidMount() {
+        const token = getFromStorage('FYP');
+        if (token) {
+            fetch('/api/users/verify?token=' + token)
+                .then(res => res.json())
+                .then(json => {
+                    if (json.success) {
+                        this.setState({
+                            token,
+                            isLoading: false
+                        });
+                    }
+                    else {
+                        this.setState({
+                            isLoading: false,
+                        })
+                    }
+                })
+        }
+        else {
+            this.setState({
+                isLoading: false,
+            });
+        }
+    }
+
     state = {
         isOpen: false
     }
@@ -34,6 +76,72 @@ class AppNavBar extends Component {
     };
 
     render() {
+        const {
+            isLoading,
+            token,
+        } = this.state;
+
+
+        if (isLoading) {
+            return (<div><p>Loading...</p></div>);
+        }
+
+        if (!token) {
+            return (
+                <div className="AppNavbar">
+                    <Navbar light expand="lg" className="mb-5" style={{backgroundColor: '#1FD14B'}}>
+                        <NavbarBrand className="NavbarBrand" href="/">Second-Hand Commodity Website<img className="logo" src={logo} alt="earth"/></NavbarBrand>
+                        <NavbarToggler onClick={this.toggle}></NavbarToggler>
+                        <Collapse isOpen={this.state.isOpen} navbar>
+                            <Nav className="mr-auto" navbar>
+                                <UncontrolledDropdown nav inNavbar>
+                                    <DropdownToggle nav caret>
+                                        Commodities
+                                    </DropdownToggle>
+                                    <DropdownMenu left style={{backgroundColor:'#1FD14B'}}>
+                                        <DropdownItem>
+                                            <NavLink href="/items">All Commodities</NavLink>
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            clothes
+                                        </DropdownItem>
+                                        <DropdownItem>
+                                            furniture
+                                        </DropdownItem>
+                                        <DropdownItem divider />
+                                        <DropdownItem>
+                                            100% Recyclable ones
+                                        </DropdownItem>
+                                    </DropdownMenu>
+                                </UncontrolledDropdown>
+                                <NavItem>
+                                    <Button color="primary">Post a Second-Hand Item <FontAwesomeIcon icon={faMouse} /></Button>
+                                </NavItem>
+                            </Nav>
+                            <Nav pullRight navbar className="right_nav">
+                                <NavItem>
+                                    <InputGroup>
+                                        <InputGroupAddon addonType="prepend">
+                                            <InputGroupText style={{backgroundColor:'#6BD502', borderColor:'black'}}>
+                                                <FontAwesomeIcon icon={faSearch} style={{color: 'white'}}/>
+                                            </InputGroupText>
+                                        </InputGroupAddon>
+                                        <Input placeholder="search" className="search_bar" />
+                                    </InputGroup>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink href="/login">Log in</NavLink>
+                                </NavItem>
+                                <NavItem>
+                                    <NavLink href="/signup">Sign up</NavLink>
+                                </NavItem>
+                            </Nav>
+                        </Collapse>
+                    </Navbar>
+                </div>
+            )
+
+        }
         return (
             <div className="AppNavbar">
                 <Navbar light expand="lg" className="mb-5" style={{backgroundColor: '#1FD14B'}}>
@@ -76,12 +184,6 @@ class AppNavBar extends Component {
                                     <Input placeholder="search" className="search_bar" />
                                 </InputGroup>
                             </NavItem>
-                            <NavItem>
-                                <NavLink href="/login">Log in</NavLink>
-                            </NavItem>
-                            <NavItem>
-                                <NavLink href="/signup">Sign up</NavLink>
-                            </NavItem>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
                                     <FontAwesomeIcon icon={faHome} />
@@ -109,7 +211,8 @@ class AppNavBar extends Component {
                     </Collapse>
                 </Navbar>
             </div>
-        );
+
+        )
     }
 }
 
