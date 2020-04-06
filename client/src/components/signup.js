@@ -16,6 +16,12 @@ import axios from "axios";
 import {setInStorage} from "./storage";
 import {BrowserRouter as Router,Route,
     Redirect,Switch} from 'react-router-dom';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+
 
 function Copyright() {
     return (
@@ -52,10 +58,19 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignUp() {
 
+    // modal window
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+    //
+
     const [signupUsername, setUsername] = useState('');
     const [signupEmail, setEmail] = useState('');
     const [signupPassword, setPassword] = useState('');
-    const [isSuccessful, setIsSuccessful] = useState(false);
+    const [prompt, setPrompt] = useState('');
+    const [ifSuccessful, setIfSuccessful] = useState(false);
 
     const classes = useStyles();
 
@@ -83,7 +98,15 @@ export default function SignUp() {
             .then(res => {
                 /*setInStorage('FYP', {token: res.data.token});
                 setToken(res.data.token);*/
+                setPrompt(res.data.message);
+                setIfSuccessful(res.data.success);
                 console.log(res.data);
+                setOpen(true);
+
+                if (res.data.success) {
+                    setTimeout(() => {  window.location.href = '/login'; }, 2000);
+                }
+
             })
 
 
@@ -155,9 +178,33 @@ export default function SignUp() {
                     >
                         Sign Up
                     </Button>
+                    <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogContent>
+                            {ifSuccessful &&
+                            <DialogContentText id="alert-dialog-description">
+                                {prompt}. Please log in now...
+                            </DialogContentText>
+                            }
+                            {!ifSuccessful &&
+                            <DialogContentText id="alert-dialog-description">
+                                {prompt}. Please sign up again.
+                            </DialogContentText>
+                            }
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="primary">
+                                Ok
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                     <Grid container justify="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="/login" variant="body2">
                                 Already have an account? Sign in
                             </Link>
                         </Grid>

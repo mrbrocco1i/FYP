@@ -15,6 +15,11 @@ import Container from '@material-ui/core/Container';
 import { Redirect } from "react-router-dom";
 import axios from 'axios';
 import {getFromStorage, setInStorage} from "./storage";
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
 
 function Copyright() {
     return (
@@ -56,6 +61,14 @@ export default function Login() {
     const [redirect, setRedirect] = useState('http:localhost:3000/');
     const [signInError, setSignInError] = useState('');
     const [token, setToken] = useState(getFromStorage('FYP'));
+    const [prompt, setPrompt] = useState('');
+    const [ifSuccessful, setIfSuccessful] = useState(false);
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     function onTextboxChangeSignEmail(event) {
         return setSignInEmail(event.target.value);
@@ -75,11 +88,14 @@ export default function Login() {
 
         axios.post('api/users/login', user)
             .then(res => {
+                setOpen(true);
+                setIfSuccessful(res.data.success);
+                setPrompt(res.data.message);
                 setInStorage('FYP', {token: res.data.token});
                 setToken(res.data.token);
                 console.log(res.data);
                 if (res.data.success) {
-
+                    setTimeout(() => {  window.location.href = '/'; }, 2000);
                 }
             })
     }
@@ -123,10 +139,7 @@ export default function Login() {
                         value={signInPassword}
                         onChange={onTextboxChangeSignPassword}
                     />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
+
                     <Button
                         type="submit"
                         fullWidth
@@ -137,14 +150,35 @@ export default function Login() {
                     >
                         Log In
                     </Button>
+                    <Dialog
+                        open={open}
+                        onClose={handleClose}
+                        aria-labelledby="alert-dialog-title"
+                        aria-describedby="alert-dialog-description"
+                    >
+                        <DialogContent>
+                            {ifSuccessful &&
+                            <DialogContentText id="alert-dialog-description">
+                                {prompt}. Back to homepage...
+                            </DialogContentText>
+                            }
+                            {!ifSuccessful &&
+                            <DialogContentText id="alert-dialog-description">
+                                {prompt}. Please log in again.
+                            </DialogContentText>
+                            }
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleClose} color="primary">
+                                Ok
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2">
+                            <Link href="/signup" variant="body2">
                                 {"Don't have an account? Sign Up"}
                             </Link>
                         </Grid>
