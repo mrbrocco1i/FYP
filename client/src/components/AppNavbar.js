@@ -25,6 +25,7 @@ import {
     getFromStorage,
     setInStorage,
 } from "./storage";
+import axios from 'axios';
 
 class AppNavBar extends Component {
     constructor(props) {
@@ -35,28 +36,29 @@ class AppNavBar extends Component {
             token: '',
             signUpError: '',
             signInError: '',
-            masterError: ''
+            isSignedIn: false
         };
+
+        this.logOut = this.logOut.bind(this);
+
     }
 
     componentDidMount() {
-        const token = getFromStorage('FYP');
-        if (token) {
-            fetch('/api/users/verify?token=' + token)
-                .then(res => res.json())
-                .then(json => {
-                    if (json.success) {
+        const obj = getFromStorage('FYP');
+        if (obj && obj.token) {
+            const { token } = obj;
+            axios.put('api/users/verify?token='+token)
+                .then(res => {
                         this.setState({
                             token,
-                            isLoading: false
-                        });
-                    }
-                    else {
-                        this.setState({
                             isLoading: false,
-                        })
+                            isSignedIn: res.data.success
+                        });
+                        console.log(res.data);
+                        console.log(token);
                     }
-                })
+                    )
+
         }
         else {
             this.setState({
@@ -75,16 +77,44 @@ class AppNavBar extends Component {
         });
     };
 
+    logOut() {
+        this.setState({
+            isLoading : true
+        });
+        const obj = getFromStorage('FYP');
+        console.log(obj)
+        if (obj && obj.token) {
+            const { token } = obj;
+            axios.put('api/users/verify?token='+token)
+                .then(res => {
+                    this.setState({
+                        token: '',
+                        isLoading: false
+                    });
+                    console.log(res.data);
+                    localStorage.clear();
+                })
+
+
+        }
+        else {
+            this.setState({
+                isLoading: false,
+            });
+        }
+}
+
     render() {
         const {
             isLoading,
             token,
+            isSignedIn
         } = this.state;
 
 
-        if (isLoading) {
+       /* if (isLoading) {
             return (<div><p>Loading...</p></div>);
-        }
+        }*/
 
         if (!token) {
             return (
@@ -142,6 +172,7 @@ class AppNavBar extends Component {
             )
 
         }
+
         return (
             <div className="AppNavbar">
                 <Navbar light expand="lg" className="mb-5" style={{backgroundColor: '#1FD14B'}}>
@@ -202,7 +233,7 @@ class AppNavBar extends Component {
                                         Customer Service
                                     </DropdownItem>
                                     <DropdownItem divider />
-                                    <DropdownItem>
+                                    <DropdownItem onClick={this.logOut}>
                                         Log out
                                     </DropdownItem>
                                 </DropdownMenu>
@@ -213,6 +244,7 @@ class AppNavBar extends Component {
             </div>
 
         )
+
     }
 }
 

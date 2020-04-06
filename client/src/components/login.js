@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,9 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { Redirect } from "react-router-dom";
+import axios from 'axios';
+import {getFromStorage, setInStorage} from "./storage";
 
 function Copyright() {
     return (
@@ -48,6 +51,40 @@ const useStyles = makeStyles(theme => ({
 
 export default function Login() {
     const classes = useStyles();
+    const [signInEmail, setSignInEmail] = useState('');
+    const [signInPassword, setSignInPassword] = useState('');
+    const [redirect, setRedirect] = useState('http:localhost:3000/');
+    const [signInError, setSignInError] = useState('');
+    const [token, setToken] = useState(getFromStorage('FYP'));
+
+    function onTextboxChangeSignEmail(event) {
+        return setSignInEmail(event.target.value);
+    }
+
+    function onTextboxChangeSignPassword(event) {
+        return setSignInPassword(event.target.value);
+    }
+
+    const handleSubmit = event => {
+        event.preventDefault();
+
+        const user = {
+            email: signInEmail,
+            password: signInPassword
+        };
+
+        axios.post('api/users/login', user)
+            .then(res => {
+                setInStorage('FYP', {token: res.data.token});
+                setToken(res.data.token);
+                console.log(res.data);
+                if (res.data.success) {
+
+                }
+            })
+    }
+
+
 
     return (
         <Container component="main" maxWidth="xs">
@@ -70,6 +107,8 @@ export default function Login() {
                         name="email"
                         autoComplete="email"
                         autoFocus
+                        value={signInEmail}
+                        onChange={onTextboxChangeSignEmail}
                     />
                     <TextField
                         variant="outlined"
@@ -81,6 +120,8 @@ export default function Login() {
                         type="password"
                         id="password"
                         autoComplete="current-password"
+                        value={signInPassword}
+                        onChange={onTextboxChangeSignPassword}
                     />
                     <FormControlLabel
                         control={<Checkbox value="remember" color="primary" />}
@@ -92,6 +133,7 @@ export default function Login() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={handleSubmit}
                     >
                         Log In
                     </Button>

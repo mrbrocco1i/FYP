@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,10 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from "axios";
+import {setInStorage} from "./storage";
+import {BrowserRouter as Router,Route,
+    Redirect,Switch} from 'react-router-dom';
 
 function Copyright() {
     return (
@@ -47,7 +51,43 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function SignUp() {
+
+    const [signupUsername, setUsername] = useState('');
+    const [signupEmail, setEmail] = useState('');
+    const [signupPassword, setPassword] = useState('');
+    const [isSuccessful, setIsSuccessful] = useState(false);
+
     const classes = useStyles();
+
+    function onTextboxChangeSignUsername(event) {
+        return setUsername(event.target.value);
+    }
+
+    function onTextboxChangeSignEmail(event) {
+        return setEmail(event.target.value);
+    }
+
+    function onTextboxChangeSignPassword(event) {
+        return setPassword(event.target.value);
+    }
+
+    const onSignup = event => {
+        event.preventDefault();
+        const newUser = {
+            username: signupUsername,
+            email: signupEmail,
+            password: signupPassword
+        };
+
+        axios.post('api/users/signup', newUser)
+            .then(res => {
+                /*setInStorage('FYP', {token: res.data.token});
+                setToken(res.data.token);*/
+                console.log(res.data);
+            })
+
+
+    }
 
     return (
         <Container component="main" maxWidth="xs">
@@ -70,6 +110,7 @@ export default function SignUp() {
                                 id="username"
                                 label="Username"
                                 autoFocus
+                                onChange={onTextboxChangeSignUsername}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -81,6 +122,7 @@ export default function SignUp() {
                                 label="Email Address"
                                 name="email"
                                 autoComplete="email"
+                                onChange={onTextboxChangeSignEmail}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -93,6 +135,7 @@ export default function SignUp() {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                onChange={onTextboxChangeSignPassword}
                             />
                         </Grid>
                         <Grid item xs={12}>
@@ -108,6 +151,7 @@ export default function SignUp() {
                         variant="contained"
                         color="primary"
                         className={classes.submit}
+                        onClick={onSignup}
                     >
                         Sign Up
                     </Button>
