@@ -26,6 +26,10 @@ import {
     setInStorage,
 } from "./storage";
 import axios from 'axios';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 class AppNavBar extends Component {
     constructor(props) {
@@ -36,7 +40,9 @@ class AppNavBar extends Component {
             token: '',
             signUpError: '',
             signInError: '',
-            isSignedIn: false
+            isSignedIn: false,
+            userEmail: '',
+            dialogOpen: false
         };
 
         this.logOut = this.logOut.bind(this);
@@ -45,17 +51,21 @@ class AppNavBar extends Component {
 
     componentDidMount() {
         const obj = getFromStorage('FYP');
+        const obj2 = getFromStorage('userEmail');
         if (obj && obj.token) {
+            const { email } = obj2;
             const { token } = obj;
             axios.put('api/users/verify?token='+token)
                 .then(res => {
                         this.setState({
                             token,
                             isLoading: false,
-                            isSignedIn: res.data.success
+                            isSignedIn: res.data.success,
+                            userEmail: email
                         });
                         console.log(res.data);
                         console.log(token);
+                        console.log(this.state.userEmail);
                     }
                     )
 
@@ -77,6 +87,12 @@ class AppNavBar extends Component {
         });
     };
 
+    handleDialogClose = () => {
+        this.setState({
+            dialogOpen: false
+        });
+    };
+
     logOut() {
         this.setState({
             isLoading : true
@@ -89,7 +105,9 @@ class AppNavBar extends Component {
                 .then(res => {
                     this.setState({
                         token: '',
-                        isLoading: false
+                        isLoading: false,
+                        isSignedIn: false,
+                        userEmail: ''
                     });
                     console.log(res.data);
                     localStorage.clear();
@@ -104,11 +122,23 @@ class AppNavBar extends Component {
         }
 }
 
+    onIssuedForUser() {
+        window.location.href = '/form';
+}
+
+    onIssuedForGuest = () => {
+        this.setState({
+            dialogOpen: true
+        });
+        setTimeout(() => {  window.location.href = '/login'; }, 2000);
+    }
+
     render() {
         const {
             isLoading,
             token,
-            isSignedIn
+            isSignedIn,
+            userEmail
         } = this.state;
 
 
@@ -116,7 +146,7 @@ class AppNavBar extends Component {
             return (<div><p>Loading...</p></div>);
         }*/
 
-        if (!token) {
+        if (!isSignedIn) {
             return (
                 <div className="AppNavbar">
                     <Navbar light expand="lg" className="mb-5" style={{backgroundColor: '#1FD14B'}}>
@@ -145,7 +175,24 @@ class AppNavBar extends Component {
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
                                 <NavItem>
-                                    <Button color="primary">Post a Second-Hand Item <FontAwesomeIcon icon={faMouse} /></Button>
+                                    <Button color="primary" onClick={this.onIssuedForGuest}>Post a Second-Hand Good <FontAwesomeIcon icon={faMouse} /></Button>
+                                    <Dialog
+                                        open={this.state.dialogOpen}
+                                        onClose={this.handleDialogClose}
+                                        aria-labelledby="alert-dialog-title"
+                                        aria-describedby="alert-dialog-description"
+                                    >
+                                        <DialogContent>
+                                            <DialogContentText id="alert-dialog-description">
+                                                Sorry. Please log in first.
+                                            </DialogContentText>
+                                        </DialogContent>
+                                        <DialogActions>
+                                            <Button onClick={this.handleDialogClose} color="primary">
+                                                Ok
+                                            </Button>
+                                        </DialogActions>
+                                    </Dialog>
                                 </NavItem>
                             </Nav>
                             <Nav pullRight navbar className="right_nav">
@@ -201,7 +248,7 @@ class AppNavBar extends Component {
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                             <NavItem>
-                                <Button color="primary">Post a Second-Hand Item <FontAwesomeIcon icon={faMouse} /></Button>
+                                <Button color="primary" onClick={this.onIssuedForUser} >Post a Second-Hand Good <FontAwesomeIcon icon={faMouse} /></Button>
                             </NavItem>
                         </Nav>
                         <Nav pullRight navbar className="right_nav">
@@ -215,6 +262,9 @@ class AppNavBar extends Component {
                                     <Input placeholder="search" className="search_bar" />
                                 </InputGroup>
                             </NavItem>
+                            <text>
+                                Welcome! {this.state.userEmail}
+                            </text>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
                                     <FontAwesomeIcon icon={faHome} />

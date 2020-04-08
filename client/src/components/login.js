@@ -19,7 +19,6 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 
 function Copyright() {
     return (
@@ -63,7 +62,6 @@ export default function Login() {
     const [token, setToken] = useState(getFromStorage('FYP'));
     const [prompt, setPrompt] = useState('');
     const [ifSuccessful, setIfSuccessful] = useState(false);
-
     const [open, setOpen] = React.useState(false);
 
     const handleClose = () => {
@@ -95,6 +93,7 @@ export default function Login() {
                 setToken(res.data.token);
                 console.log(res.data);
                 if (res.data.success) {
+                    setInStorage('userEmail', {email: signInEmail});
                     setTimeout(() => {  window.location.href = '/'; }, 2000);
                 }
             })
