@@ -32,6 +32,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import Typography from "@material-ui/core/Typography";
 
+
 class AppNavBar extends Component {
     constructor(props) {
         super(props);
@@ -112,6 +113,7 @@ class AppNavBar extends Component {
                     });
                     console.log(res.data);
                     localStorage.clear();
+                    window.location.href = '/';
                 })
 
 

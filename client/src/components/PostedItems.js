@@ -9,11 +9,8 @@ import {getFromStorage} from "./storage";
 import Pagination from "./Pagination";
 import Container from "@material-ui/core/Container";
 import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import LabelIcon from '@material-ui/icons/Label';
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -67,7 +64,7 @@ export default function AutoGridNoWrap() {
         console.log(id);
         axios.delete(`api/commodities/${id}`);
         setOpen(false);
-      //  window.location.href = '/posted';
+        window.location.href = '/posted';
     }
 
     return (
@@ -76,7 +73,7 @@ export default function AutoGridNoWrap() {
             <Paper className={classes.paper} item key={post._id}>
                 <Grid container wrap="nowrap" spacing={2}>
                     <Grid item>
-                        <Avatar>W</Avatar>
+                        <LabelIcon />
                     </Grid>
                     <Grid item xs>
                         <Typography>Title: {post.name}</Typography>
@@ -84,33 +81,7 @@ export default function AutoGridNoWrap() {
                         <Typography>Price: {post.price}€</Typography>
                     </Grid>
                     <Grid>
-                        <Button color="primary" onClick={() => {
-                            setOpen(true);
-                            console.log(post._id);
-                        }}>REMOVE</Button>
-                        <Dialog
-                            open={open}
-                            onClose={handleClose}
-                            aria-labelledby="alert-dialog-title"
-                            aria-describedby="alert-dialog-description"
-                        >
-                            <DialogContent>
-                                <DialogContentText id="alert-dialog-description">
-                                    Are you sure?
-                                </DialogContentText>
-                            </DialogContent>
-                            <DialogActions>
-                                <Button onClick={() => {
-                                    setOpen(false);
-                                    console.log(post._id);
-                                }} color="primary">
-                                    Back
-                                </Button>
-                                <Button onClick={onRemove.bind(this,post._id)} color="primary">
-                                    Ok
-                                </Button>
-                            </DialogActions>
-                        </Dialog>
+                        <Button color="primary" onClick={onRemove.bind(this,post._id)}>REMOVE</Button>
                     </Grid>
                 </Grid>
             </Paper>
