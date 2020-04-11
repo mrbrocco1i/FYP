@@ -5,6 +5,7 @@ import login from './login';
 import signup from './signup';
 import items from './items';
 import form from './form';
+import postedItems from './PostedItems';
 
 const Main = () => {
     return (
@@ -15,6 +16,7 @@ const Main = () => {
                 <Route exact path='/signup' component={signup} />
                 <Route exact path='/items' component={items} />
                 <Route exact path='/form' component={form} />
+                <Route exact path='/posted' component={postedItems} />
             </Switch>
         </main>
     )

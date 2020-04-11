@@ -9,7 +9,10 @@ const CommoditySchema = new Schema({
     manufacturer: String,
     recycling_index: Number,
     description: String,
-    seller_id: [{type: Schema.Types.ObjectId, ref: 'user'}]
+    seller_email: String,
+    isRecycPackaging: Boolean,
+    isRecycMaterial: Boolean,
+    isRecycManufacturer: Boolean
 },
     {collection:'commodity'});
 

@@ -61,14 +61,13 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export default function Album() {
 
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [postsPerPage] = useState(1);
+    const [postsPerPage] = useState(6);
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -136,11 +135,20 @@ export default function Album() {
                                         title="Image title"
                                     />
                                     <CardContent className={classes.cardContent}>
-                                        <Typography gutterBottom variant="h5" component="h2">
+                                        <Typography gutterBottom variant="h4" component="h2">
                                             {post.name}
                                         </Typography>
                                         <Typography>
-                                            {post.description}
+                                            Type: {post.type}
+                                        </Typography>
+                                        <Typography>
+                                            Desc: {post.description}
+                                        </Typography>
+                                        <Typography>
+                                            Price: {post.price}€
+                                        </Typography>
+                                        <Typography>
+                                            Seller: {post.seller_email}
                                         </Typography>
                                     </CardContent>
                                     <CardActions>

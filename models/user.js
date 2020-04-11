@@ -7,13 +7,14 @@ const UserSchema = new Schema({
     password: String,
     email: String,
     total_ranking: Number,
-    commodity_ids: [{type: Schema.Types.ObjectId, ref: 'commodity'}],
+    /*commodity_ids: [{type: Schema.Types.ObjectId, ref: 'commodity'}],
     transaction_ids: [{type: Schema.Types.ObjectId, ref: 'transaction'}],
-    complaint_ids: [{type: Schema.Types.ObjectId, ref: 'complaint'}],
+    complaint_ids: [{type: Schema.Types.ObjectId, ref: 'complaint'}],*/
     isDeleted: {
         type: Boolean,
         default: false
-    }
+    },
+    phone: String
 },
     {collection: 'user'});
 

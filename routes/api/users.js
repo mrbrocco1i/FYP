@@ -11,7 +11,7 @@ router.get('/', (req,res) => {
         .then(users => res.json(users));
 });
 
-// @route   POST api/users
+// @route   POST api/users/signup
 // @desc    Sign Up
 // @access  Public
 router.post('/signup', (req,res,next) => {
@@ -93,7 +93,7 @@ router.delete('/:id', (req,res) => {
         .catch(err => res.status(404).json({ success: false }));
 })
 
-// @route   POST api/users
+// @route   POST api/users/login
 // @desc    Sign In
 // @access  Public
 router.post('/login', (req,res,next) => {
@@ -168,6 +168,9 @@ router.post('/login', (req,res,next) => {
 
 });
 
+// @route   PUT api/users/verify
+// @desc    Verify Token
+// @access  Public
 router.put('/verify', (req, res, next) => {
     const { query } = req;
     const { token } = query;
@@ -198,7 +201,9 @@ router.put('/verify', (req, res, next) => {
     })
 })
 
-
+// @route   PUT api/users/logout
+// @desc    Log Out
+// @access  Public
 router.put('/logout', (req, res, next) => {
     const { query } = req;
     const { token } = query;
@@ -226,5 +231,6 @@ router.put('/logout', (req, res, next) => {
         }
     })
 })
+
 
 module.exports = router;

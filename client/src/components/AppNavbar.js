@@ -30,6 +30,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import Typography from "@material-ui/core/Typography";
 
 class AppNavBar extends Component {
     constructor(props) {
@@ -262,9 +263,7 @@ class AppNavBar extends Component {
                                     <Input placeholder="search" className="search_bar" />
                                 </InputGroup>
                             </NavItem>
-                            <text>
-                                Welcome! {this.state.userEmail}
-                            </text>
+                            <Typography component="h2" variant="h6" align="bottom">Welcome! {this.state.userEmail}</Typography>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
                                     <FontAwesomeIcon icon={faHome} />
@@ -274,7 +273,7 @@ class AppNavBar extends Component {
                                         My Account
                                     </DropdownItem>
                                     <DropdownItem>
-                                        My Posted Items
+                                        <NavLink href="/posted">My Posted Items</NavLink>
                                     </DropdownItem>
                                     <DropdownItem>
                                         My Orders
