@@ -14,7 +14,10 @@ const UserSchema = new Schema({
         type: Boolean,
         default: false
     },
-    phone: String
+    phone: {
+        type: String,
+        default: 'No phone number stored'
+    }
 },
     {collection: 'user'});
 

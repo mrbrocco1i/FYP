@@ -62,15 +62,6 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const getPhoneNumber = async (email) => {
-    console.log(email);
-    const obj = {
-        email: email
-    }
-    const res = await axios.post('api/users/getByEmail',obj);
-    alert("Phone Number: " + res.data.phone);
-}
-
 
 export default function Album() {
 
@@ -82,13 +73,12 @@ export default function Album() {
     useEffect(() => {
         const fetchPosts = async () => {
             setLoading(true);
-            const res = await axios.get('api/commodities');
+            const res = await axios.post('api/commodities/getByType',{type: 'clothing'});
             setPosts(res.data);
             setLoading(false);
         }
 
         fetchPosts();
-
     }, []);
 
     // Get current posts
@@ -111,11 +101,12 @@ export default function Album() {
                 <div className={classes.heroContent}>
                     <Container maxWidth="sm">
                         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                            All Commodities
+                            Album layout
                         </Typography>
                         <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                            Find every second-hand commodity here at this website. You can see a recycling level for
-                            each item. Choose what suits you best!
+                            Something short and leading about the collection below—its contents, the creator, etc.
+                            Make it short and sweet, but not too short so folks don&apos;t simply skip over it
+                            entirely.
                         </Typography>
                         <div className={classes.heroButtons}>
                             <Grid container spacing={2} justify="center">
@@ -161,27 +152,30 @@ export default function Album() {
                                             Seller: {post.seller_email}
                                         </Typography>
                                         {post.recycling_index === 1 &&
-                                            <Grid>
-                                                <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
-                                            </Grid>
+                                        <Grid>
+                                            <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
+                                        </Grid>
                                         }
                                         {post.recycling_index === 2 &&
-                                            <Grid>
-                                                <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
-                                                <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
-                                            </Grid>
+                                        <Grid>
+                                            <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
+                                            <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
+                                        </Grid>
                                         }
                                         {post.recycling_index === 3 &&
-                                            <Grid>
-                                                <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
-                                                <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
-                                                <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
-                                            </Grid>
+                                        <Grid>
+                                            <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
+                                            <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
+                                            <EcoIcon style={{backgroundColor:'#1FD14B'}}></EcoIcon>
+                                        </Grid>
                                         }
                                     </CardContent>
                                     <CardActions>
-                                        <Button size="small" color="primary" onClick={getPhoneNumber.bind(this,post.seller_email)}>
-                                            View Phone Number
+                                        <Button size="small" color="primary">
+                                            View
+                                        </Button>
+                                        <Button size="small" color="primary">
+                                            Edit
                                         </Button>
                                     </CardActions>
                                 </Card>

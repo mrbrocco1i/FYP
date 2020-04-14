@@ -246,6 +246,22 @@ export default function Form() {
     const handleSubmit = event => {
         event.preventDefault();
 
+        let recycling_index = 0;
+        let partA = 0;
+        let partB = 0;
+        let partC = 0;
+
+        if (state.checkedA) {
+            partA = 1;
+        }
+        if (state.checkedB) {
+            partB = 1;
+        }
+        if (state.checkedB) {
+            partC = 1;
+        }
+        recycling_index = partA + partB + partC;
+
         if (activeStep !== steps.length - 1) {
             handleNext();
         }
@@ -262,6 +278,7 @@ export default function Form() {
                 isRecycPackaging: state.checkedA,
                 isRecycMaterial: state.checkedB,
                 isRecycManufacturer: state.checkedC,
+                recycling_index: recycling_index
             };
 
 

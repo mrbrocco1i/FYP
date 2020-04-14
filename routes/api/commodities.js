@@ -12,7 +12,7 @@ router.get('/', (req,res) => {
 });
 
 
-// @route   GET api/commodities/getByEmail
+// @route   POST api/commodities/getByEmail
 // @desc    Get All Commodities Posed by Designated User
 // @access  Public
 router.post('/getByEmail', (req,res) => {
@@ -125,7 +125,8 @@ router.post('/', (req,res,next) => {
         seller_email: req.body.seller_email,
         isRecycPackaging: req.body.isRecycPackaging,
         isRecycMaterial: req.body.isRecycMaterial,
-        isRecycManufacturer: req.body.isRecycManufacturer
+        isRecycManufacturer: req.body.isRecycManufacturer,
+        recycling_index: req.body.recycling_index
     });
     newCommodity.save((err, good) => {
         if (err) {
@@ -142,5 +143,35 @@ router.post('/', (req,res,next) => {
 
 });
 
+// @route   POST api/commodities/getByType
+// @desc    Get Commodities by type
+// @access  Public
+router.post('/getByType', (req,res) => {
+    Commodity.find({type: req.body.type})
+        .then(commodities => res.json(commodities))
+})
+
+// @route   POST api/commodities/getWithMaxIndex
+// @desc    Get Commodities with Max Recycling Index
+// @access  Public
+router.get('/getWithMaxIndex', (req,res) => {
+    Commodity.find({recycling_index: 3})
+        .then(commodities => res.json(commodities))
+})
+
+// @route   POST api/commodities/getWithMaxIndex
+// @desc    Get Commodities with Max Recycling Index
+// @access  Public
+
+router.post('/fuzzySearch', (req,res) => {
+    var regex = new RegExp(req.body.input,'i');
+    Commodity.find({"name":regex}, function(err,commodities) {
+        if (commodities.length === 0)
+            res.json({message:'No Such Commodity!'});
+        else
+            res.json(commodities);
+
+    })
+})
 
 module.exports = router;

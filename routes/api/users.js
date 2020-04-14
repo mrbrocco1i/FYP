@@ -11,6 +11,17 @@ router.get('/', (req,res) => {
         .then(users => res.json(users));
 });
 
+// @route   Get api/users/getByEmail
+// @desc    Get User Info By User Email
+// @access  Public
+router.post('/getByEmail', (req,res) => {
+    User.findOne({
+        email: req.body.email,
+    })
+        .then(user => res.json(user));
+})
+
+
 // @route   POST api/users/signup
 // @desc    Sign Up
 // @access  Public
@@ -231,6 +242,84 @@ router.put('/logout', (req, res, next) => {
         }
     })
 })
+
+// @route   POST api/users/updUsername
+// @desc    Update Username
+// @access  Public
+router.post('/updUsername', (req,res) => {
+    User.findOne({
+        email: req.body.email,
+    })
+        .then(user => {
+            if (!req.body.username) {
+                res.send({
+                    success:false,
+                    message: 'Username cannot be blank!'
+                })
+            }
+            else {
+                user.username = req.body.username;
+                user.save();
+                res.send({
+                    success: true,
+                    message: 'Good'
+                })
+            }
+        });
+})
+
+// @route   POST api/users/updPhone
+// @desc    Update Phone
+// @access  Public
+router.post('/updPhone', (req,res) => {
+    User.findOne({
+        email: req.body.email,
+    })
+        .then(user => {
+            if (!req.body.phone) {
+                res.send({
+                    success:false,
+                    message: 'Phone Number cannot be blank!'
+                })
+            }
+            else {
+                user.phone = req.body.phone;
+                user.save();
+                res.send({
+                    success: true,
+                    message: 'Good'
+                })
+            }
+        });
+})
+
+// @route   POST api/users/updPsd
+// @desc    Update Psd
+// @access  Public
+router.post('/updPsd', (req,res) => {
+    const tempUser = new User();
+    const newPsw = tempUser.generateHash(req.body.password);
+    User.findOne({
+        email: req.body.email,
+    })
+        .then(user => {
+            if (!newPsw) {
+                res.send({
+                    success:false,
+                    message: 'Password cannot be blank!'
+                })
+            }
+            else {
+                user.password = newPsw;
+                user.save();
+                res.send({
+                    success: true,
+                    message: 'Good'
+                })
+            }
+        });
+})
+
 
 
 module.exports = router;

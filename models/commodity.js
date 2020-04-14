@@ -7,7 +7,10 @@ const CommoditySchema = new Schema({
     material: String,
     price: Number,
     manufacturer: String,
-    recycling_index: Number,
+    recycling_index: {
+        type: Number,
+        default: 0
+    },
     description: String,
     seller_email: String,
     isRecycPackaging: Boolean,

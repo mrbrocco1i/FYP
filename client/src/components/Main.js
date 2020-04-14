@@ -6,6 +6,10 @@ import signup from './signup';
 import items from './items';
 import form from './form';
 import postedItems from './PostedItems';
+import personalAcc from "./personalAcc";
+import clothing from './type_clothing';
+import furniture from './type_furniture';
+import mostRecyclable from './100%recyclable';
 
 const Main = () => {
     return (
@@ -17,6 +21,10 @@ const Main = () => {
                 <Route exact path='/items' component={items} />
                 <Route exact path='/form' component={form} />
                 <Route exact path='/posted' component={postedItems} />
+                <Route exact path='/acc' component={personalAcc} />
+                <Route exact path='/clothing' component={clothing} />
+                <Route exact path='/furniture' component={furniture} />
+                <Route exact path='/100recyclable' component={mostRecyclable} />
             </Switch>
         </main>
     )

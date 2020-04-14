@@ -166,14 +166,14 @@ class AppNavBar extends Component {
                                             <NavLink href="/items">All Commodities</NavLink>
                                         </DropdownItem>
                                         <DropdownItem>
-                                            clothes
+                                            <NavLink href="/clothing">Clothing</NavLink>
                                         </DropdownItem>
                                         <DropdownItem>
-                                            furniture
+                                            <NavLink href="/furniture">Furniture</NavLink>
                                         </DropdownItem>
                                         <DropdownItem divider />
                                         <DropdownItem>
-                                            100% Recyclable ones
+                                            <NavLink href="/100recyclable">100% Recyclable Ones</NavLink>
                                         </DropdownItem>
                                     </DropdownMenu>
                                 </UncontrolledDropdown>
@@ -239,14 +239,14 @@ class AppNavBar extends Component {
                                         <NavLink href="/items">All Commodities</NavLink>
                                     </DropdownItem>
                                     <DropdownItem>
-                                        clothes
+                                        <NavLink href="/clothing">Clothing</NavLink>
                                     </DropdownItem>
                                     <DropdownItem>
-                                        furniture
+                                        <NavLink href="/furniture">Furniture</NavLink>
                                     </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem>
-                                        100% Recyclable ones
+                                        <NavLink href="/100recyclable">100% Recyclable Ones</NavLink>
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
@@ -272,7 +272,7 @@ class AppNavBar extends Component {
                                 </DropdownToggle>
                                 <DropdownMenu right style={{backgroundColor:'#1FD14B'}}>
                                     <DropdownItem>
-                                        My Account
+                                        <NavLink href="/acc">My Account</NavLink>
                                     </DropdownItem>
                                     <DropdownItem>
                                         <NavLink href="/posted">My Posted Items</NavLink>
