@@ -78,7 +78,7 @@ export default function AutoGridNoWrap() {
                     <Grid item xs>
                         <Typography>Title: {post.name}</Typography>
                         <Typography>Type: {post.type}</Typography>
-                        <Typography>Price: {post.price}€</Typography>
+                        <Typography>Price: €{post.price}</Typography>
                     </Grid>
                     <Grid>
                         <Button color="primary" onClick={onRemove.bind(this,post._id)}>REMOVE</Button>

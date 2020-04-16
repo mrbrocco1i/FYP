@@ -16,6 +16,7 @@ import Container from '@material-ui/core/Container';
 import Link from '@material-ui/core/Link';
 import Pagination from "./Pagination";
 import EcoIcon from '@material-ui/icons/Eco';
+import commodityImage from '../assets/images/logo.png'
 
 function Copyright() {
     return (
@@ -127,7 +128,7 @@ export default function Album() {
                                 <Card className={classes.card}>
                                     <CardMedia
                                         className={classes.cardMedia}
-                                        image="https://source.unsplash.com/random"
+                                        image={commodityImage}
                                         title="Image title"
                                     />
                                     <CardContent className={classes.cardContent}>
@@ -141,7 +142,7 @@ export default function Album() {
                                             Desc: {post.description}
                                         </Typography>
                                         <Typography>
-                                            Price: {post.price}€
+                                            Price: €{post.price}
                                         </Typography>
                                         <Typography>
                                             Seller: {post.seller_email}
