@@ -62,6 +62,15 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+const getPhoneNumber = async (email) => {
+    console.log(email);
+    const obj = {
+        email: email
+    }
+    const res = await axios.post('api/users/getByEmail',obj);
+    alert("Phone Number: " + res.data.phone);
+}
+
 
 export default function Album() {
 
@@ -101,27 +110,13 @@ export default function Album() {
                 <div className={classes.heroContent}>
                     <Container maxWidth="sm">
                         <Typography component="h1" variant="h2" align="center" color="textPrimary" gutterBottom>
-                            Album layout
+                            100% Recyclable Commodities
                         </Typography>
                         <Typography variant="h5" align="center" color="textSecondary" paragraph>
-                            Something short and leading about the collection below—its contents, the creator, etc.
-                            Make it short and sweet, but not too short so folks don&apos;t simply skip over it
-                            entirely.
+                            Find every second-hand commodity here at this website. You can see a recycling level for
+                            each item. Choose what suits you best!
                         </Typography>
-                        <div className={classes.heroButtons}>
-                            <Grid container spacing={2} justify="center">
-                                <Grid item>
-                                    <Button variant="contained" color="primary">
-                                        Main call to action
-                                    </Button>
-                                </Grid>
-                                <Grid item>
-                                    <Button variant="outlined" color="primary">
-                                        Secondary action
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </div>
+
                     </Container>
                 </div>
                 <Container className={classes.cardGrid} maxWidth="md">
@@ -171,11 +166,8 @@ export default function Album() {
                                         }
                                     </CardContent>
                                     <CardActions>
-                                        <Button size="small" color="primary">
-                                            View
-                                        </Button>
-                                        <Button size="small" color="primary">
-                                            Edit
+                                        <Button size="small" color="primary" onClick={getPhoneNumber.bind(this,post.seller_email)}>
+                                            View Phone Number
                                         </Button>
                                     </CardActions>
                                 </Card>
@@ -187,17 +179,6 @@ export default function Album() {
                     <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate} />
                 </Container>
             </main>
-            {/* Footer */}
-            <footer className={classes.footer}>
-                <Typography variant="h6" align="center" gutterBottom>
-                    Footer
-                </Typography>
-                <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-                    Something here to give the footer a purpose!
-                </Typography>
-                <Copyright />
-            </footer>
-            {/* End footer */}
         </React.Fragment>
     );
 }

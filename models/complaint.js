@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const ComplaintSchema = new ComplaintSchema({
     message: String,
-    user_id: [{type: Schema.Types.ObjectId, ref: 'user'}]
+    email: String
 },
     {collection:'complaint'});
 

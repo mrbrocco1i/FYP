@@ -320,6 +320,42 @@ router.post('/updPsd', (req,res) => {
         });
 })
 
+// @route   POST api/users/updPhone
+// @desc    Update Phone
+// @access  Public
+router.post('/sendComplaint', (req,res) => {
+    User.findOne({
+        email: req.body.email,
+    })
+        .then(user => {
+            if (!req.body.message) {
+                res.send({
+                    success:false,
+                    message: 'Complaint cannot be blank!'
+                })
+            }
+            else {
+                user.complaint.push(req.body.message)
+                user.save();
+                res.send({
+                    success: true,
+                    message: 'Good'
+                })
+            }
+        });
+})
+
+// @route   GET api/users
+// @desc    Get All Users
+// @access  Public
+router.post('/checkComplaint', (req,res) => {
+    User.findOne({
+        email: req.body.email
+    })
+        .then(user => res.json(user.complaint));
+});
+
+
 
 
 module.exports = router;

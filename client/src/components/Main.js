@@ -10,6 +10,7 @@ import personalAcc from "./personalAcc";
 import clothing from './type_clothing';
 import furniture from './type_furniture';
 import mostRecyclable from './100%recyclable';
+import customerService from "./customerService";
 
 const Main = () => {
     return (
@@ -25,6 +26,7 @@ const Main = () => {
                 <Route exact path='/clothing' component={clothing} />
                 <Route exact path='/furniture' component={furniture} />
                 <Route exact path='/100recyclable' component={mostRecyclable} />
+                <Route exact path='/customerService' component={customerService} />
             </Switch>
         </main>
     )

@@ -3,6 +3,8 @@ import '../assets/css/AppNavbar.css';
 import logo from '../assets/images/logo.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch,faMouse,faHome } from "@fortawesome/free-solid-svg-icons";
+import SearchIcon from '@material-ui/icons/Search';
+import IconButton from '@material-ui/core/IconButton';
 import {
     Collapse,
     Navbar,
@@ -44,7 +46,7 @@ class AppNavBar extends Component {
             signInError: '',
             isSignedIn: false,
             userEmail: '',
-            dialogOpen: false
+            dialogOpen: false,
         };
 
         this.logOut = this.logOut.bind(this);
@@ -94,6 +96,8 @@ class AppNavBar extends Component {
             dialogOpen: false
         });
     };
+
+
 
     logOut() {
         this.setState({
@@ -200,14 +204,9 @@ class AppNavBar extends Component {
                             </Nav>
                             <Nav pullRight navbar className="right_nav">
                                 <NavItem>
-                                    <InputGroup>
-                                        <InputGroupAddon addonType="prepend">
-                                            <InputGroupText style={{backgroundColor:'#6BD502', borderColor:'black'}}>
-                                                <FontAwesomeIcon icon={faSearch} style={{color: 'white'}}/>
-                                            </InputGroupText>
-                                        </InputGroupAddon>
-                                        <Input placeholder="search" className="search_bar" />
-                                    </InputGroup>
+                                    <IconButton aria-label="delete">
+                                        <SearchIcon />
+                                    </IconButton>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink href="/login">Log in</NavLink>
@@ -256,14 +255,9 @@ class AppNavBar extends Component {
                         </Nav>
                         <Nav pullRight navbar className="right_nav">
                             <NavItem>
-                                <InputGroup>
-                                    <InputGroupAddon addonType="prepend">
-                                        <InputGroupText style={{backgroundColor:'#6BD502', borderColor:'black'}}>
-                                            <FontAwesomeIcon icon={faSearch} style={{color: 'white'}}/>
-                                        </InputGroupText>
-                                    </InputGroupAddon>
-                                    <Input placeholder="search" className="search_bar" />
-                                </InputGroup>
+                                <IconButton aria-label="delete">
+                                    <SearchIcon />
+                                </IconButton>
                             </NavItem>
                             <Typography component="h2" variant="h6" align="bottom">Welcome! {this.state.userEmail}</Typography>
                             <UncontrolledDropdown nav inNavbar>
@@ -278,10 +272,7 @@ class AppNavBar extends Component {
                                         <NavLink href="/posted">My Posted Items</NavLink>
                                     </DropdownItem>
                                     <DropdownItem>
-                                        My Orders
-                                    </DropdownItem>
-                                    <DropdownItem>
-                                        Customer Service
+                                        <NavLink href="/customerService">Customer Service</NavLink>
                                     </DropdownItem>
                                     <DropdownItem divider />
                                     <DropdownItem onClick={this.logOut}>

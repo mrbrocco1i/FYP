@@ -17,7 +17,12 @@ const UserSchema = new Schema({
     phone: {
         type: String,
         default: 'No phone number stored'
+    },
+    complaint: {
+        type: Array,
+        default: []
     }
+
 },
     {collection: 'user'});
 

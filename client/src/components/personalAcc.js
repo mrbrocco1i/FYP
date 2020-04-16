@@ -140,7 +140,7 @@ export default function ControlledExpansionPanels() {
                     id="panel1bh-header"
                 >
                     <Typography className={classes.heading}>Username</Typography>
-                    <Typography className={classes.secondaryHeading}>{username} --- Unfold to check your username</Typography>
+                    <Typography className={classes.secondaryHeading}>{username} --- Unfold to update your username</Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
                     <Grid container wrap="nowrap" spacing={2}>
@@ -193,7 +193,7 @@ export default function ControlledExpansionPanels() {
                 >
                     <Typography className={classes.heading}>Phone Number</Typography>
                     <Typography className={classes.secondaryHeading}>
-                        {phone} --- Unfold to check your phone number
+                        {phone} --- Unfold to update your phone number
                     </Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>

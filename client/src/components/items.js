@@ -117,20 +117,7 @@ export default function Album() {
                             Find every second-hand commodity here at this website. You can see a recycling level for
                             each item. Choose what suits you best!
                         </Typography>
-                        <div className={classes.heroButtons}>
-                            <Grid container spacing={2} justify="center">
-                                <Grid item>
-                                    <Button variant="contained" color="primary">
-                                        Main call to action
-                                    </Button>
-                                </Grid>
-                                <Grid item>
-                                    <Button variant="outlined" color="primary">
-                                        Secondary action
-                                    </Button>
-                                </Grid>
-                            </Grid>
-                        </div>
+
                     </Container>
                 </div>
                 <Container className={classes.cardGrid} maxWidth="md">
@@ -193,17 +180,6 @@ export default function Album() {
                     <Pagination postsPerPage={postsPerPage} totalPosts={posts.length} paginate={paginate} />
                 </Container>
             </main>
-            {/* Footer */}
-            <footer className={classes.footer}>
-                <Typography variant="h6" align="center" gutterBottom>
-                    Footer
-                </Typography>
-                <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-                    Something here to give the footer a purpose!
-                </Typography>
-                <Copyright />
-            </footer>
-            {/* End footer */}
         </React.Fragment>
     );
 }
