@@ -10,9 +10,6 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Link from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
-import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
-import Review from './Review';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -36,7 +33,7 @@ function Copyright() {
         <Typography variant="body2" color="textSecondary" align="center">
             {'Copyright © '}
             <Link color="inherit" href="https://material-ui.com/">
-                Your Website
+                Second-Hand Commodity Website
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -204,11 +201,11 @@ export default function Form() {
             case 2:
                 return  <React.Fragment>
                     <Typography variant="h6" gutterBottom>
-                        What's your post title?
+                        Which following requirements does this good meet?
                     </Typography>
                     <FormGroup column>
                         <FormControlLabel control={<Checkbox checked={state.checkedA} onChange={handleCheck} name="checkedA" color="primary" />}
-                            label="packaging" />
+                            label="recyclable packaging" />
                         <FormControlLabel
                             control={
                                 <Checkbox
@@ -218,7 +215,7 @@ export default function Form() {
                                     color="primary"
                                 />
                             }
-                            label="materials"
+                            label="recyclable materials"
                         />
                         <FormControlLabel
                             control={

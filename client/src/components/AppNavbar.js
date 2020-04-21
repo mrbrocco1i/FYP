@@ -204,11 +204,6 @@ class AppNavBar extends Component {
                             </Nav>
                             <Nav pullRight navbar className="right_nav">
                                 <NavItem>
-                                    <IconButton aria-label="delete">
-                                        <SearchIcon />
-                                    </IconButton>
-                                </NavItem>
-                                <NavItem>
                                     <NavLink href="/login">Log in</NavLink>
                                 </NavItem>
                                 <NavItem>
@@ -254,11 +249,6 @@ class AppNavBar extends Component {
                             </NavItem>
                         </Nav>
                         <Nav pullRight navbar className="right_nav">
-                            <NavItem>
-                                <IconButton aria-label="delete">
-                                    <SearchIcon />
-                                </IconButton>
-                            </NavItem>
                             <Typography component="h2" variant="h6" align="bottom">Welcome! {this.state.userEmail}</Typography>
                             <UncontrolledDropdown nav inNavbar>
                                 <DropdownToggle nav caret>
