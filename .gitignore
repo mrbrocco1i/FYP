@@ -7,6 +7,8 @@
 /**/.DS_S*
 /.pnp
 .pnp.js
+/client/cypress/videos
+
 
 **/.idea/workspace.xml 
 **/.idea/tasks.xml
