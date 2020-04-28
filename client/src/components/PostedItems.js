@@ -62,9 +62,15 @@ export default function AutoGridNoWrap() {
 
     function onRemove(id) {
         console.log(id);
-        axios.delete(`api/commodities/${id}`);
-        setOpen(false);
-        window.location.href = '/posted';
+        axios.delete(`api/commodities/${id}`)
+            .then(res => {
+                alert(res.data.message);
+
+                if (res.data.success) {
+                    window.location.href = '/posted';
+                }
+            })
+
     }
 
     return (

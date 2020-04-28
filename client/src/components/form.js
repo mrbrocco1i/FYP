@@ -254,7 +254,7 @@ export default function Form() {
         if (state.checkedB) {
             partB = 1;
         }
-        if (state.checkedB) {
+        if (state.checkedC) {
             partC = 1;
         }
         recycling_index = partA + partB + partC;

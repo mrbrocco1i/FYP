@@ -45,8 +45,16 @@ router.post('/getByEmail', (req,res) => {
 // @access  Public
 router.delete('/:id', (req,res) => {
     Commodity.findById(req.params.id)
-        .then(commodity => commodity.remove().then(() => res.json({success:true})))
-        .catch(err => res.status(404).json({ success: false }));
+        .then(commodity => commodity.remove().then(() => res.send({
+            success: true,
+            message: "Deleted"
+            })
+        ))
+        .catch(err => res.send({
+                success: false,
+                message: 'Error: Server error'
+            })
+        );
 })
 
 // @route   POST api/commodities
